@@ -1,0 +1,6 @@
+.*.swp
+__pycache__/
+*.zip
+__MACOSX/
+._*
+.DS_Store
