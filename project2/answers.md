@@ -1,8 +1,8 @@
 #Part1
 Part 1.1
- -pbkdf2 takes the plain text passkey that the user sets, and reconfigures it into a set of random bits and pass it on to aes. Doing so is crucial to the security of the encryption because human passphrases tend to not be random and contain coherent thought/repititions. 
+	1. -pbkdf2 takes the plain text passkey that the user sets, and reconfigures it into a set of random bits and pass it on to aes. Doing so is crucial to the security of the encryption because human passphrases tend to not be random and contain coherent thought/repititions. 
 Part1.2
- They generate different checksums because each time the message is encrypted a random string of data is inserted thus generating a different hash. Having different IV's is important because otherwise a hacker could tell that 2 files contained the same text, which could open them up to cross referencing and pattern recognition  since identical texts would yield identical ciphertexts.
+	2. They generate different checksums because each time the message is encrypted a random string of data is inserted thus generating a different hash. Having different IV's is important because otherwise a hacker could tell that 2 files contained the same text, which could open them up to cross referencing and pattern recognition  since identical texts would yield identical ciphertexts.
 Part 1.3
 	1. ECB produces 3 distinct blocks, whereas CBC produces 37, each distinct. Of the 3 distinct blocks, the most common is repeated 24 times.
 	2. Despite not leaking the contents of the file, ECB did leak certain patterns within the text such as certain types of repeating/identical ciphertext. The illumination of these patterns in turn allow them to observe the data structure and potentially use pattern analysis to figure out the contents
@@ -24,7 +24,7 @@ Part 4.3
 	2. You verify with your public key
 	3. It is encrypted with the recipients public key
 	4. And decrypted with the recipients private key 	
-	2) Signing provides authenticity to whatever is sent because it holds your personal key, and is therfore uniquely yours and nonrepudible. Encryption largely just provides confidentiality, but anyone with your public key can encrypt it.
+	5. Signing provides authenticity to whatever is sent because it holds your personal key, and is therfore uniquely yours and nonrepudible. Encryption largely just provides confidentiality, but anyone with your public key can encrypt it.
 
 #Part 5
 	1. Ed25519 uses a harder mathmatical process than what RSA uses(eliptical curve vs prime factorization). This added difficulty to crack means it's not necessarily weaker despite the shorter length.
