@@ -1,7 +1,7 @@
 Part 1.1
- -pbkdf2 iterates over the password and hashes it, with the "-salt" inserting a random string of data to make it harder to interpret. A passphrase is nessecary because without it anybody could decrypt the encrypted file, and access the password
+ -pbkdf2 takes the plain text passkey that the user sets, and reconfigures it into a set of random bits and pass it on to aes. Doing so is crucial to the security of the encryption because human passphrases tend to not be random and contain coherent thought/repititions. 
 Part1.2
- They generate different checksums because each time the message is encrypted a random string of data is inserted thus generating a different hash. This is important because otherwise a hacker could tell that 2 files contained the same password, which could open them up to dictionary cross referencing since identical texts would yield identical ciphertexts.
+ They generate different checksums because each time the message is encrypted a random string of data is inserted thus generating a different hash. Having different IV's is important because otherwise a hacker could tell that 2 files contained the same text, which could open them up to cross referencing and pattern recognition  since identical texts would yield identical ciphertexts.
 Part 1.3
 	1. ECB produces 3 distinct blocks, whereas CBC produces 18. Of the 3 distinct blocks, the most common is repeated 12 times.
 	2. Despite not leaking the contents of the file, ECB did leak certain patterns within the text such as certain types of repeating/identical ciphertext. The illumination of these patterns in turn allow them to observe the data structure and potentially use pattern analysis to figure out the contents
@@ -12,23 +12,20 @@ Part 2
 	3. Provided their ability to intercept files sent between the parties, the hacker can do basically anything with the provided only a SHA-256 is used. As explained earlier, they would be able to modify the file and trick the recipient rather easily into accepting it/misleading them into believing that they are not who they say they are. Alternatively with an HMAC, while the hacker would be able to read/modify the file, they wouldn't be able to trick the recipient into accepting it/believing them to be someone else.
 Part 3
 	1. It proves that whoever generated the key did so with access to my email, it however does not verify that it was specifically me.
-	2. Confirming with the classmate offline ideally, or perhaps over call/other form of communication would help verify. Having a middleman would also help the process
+	2. Confirming with the classmate offline ideally, or perhaps over call/other form of communication would help verify. Having a external mutal friend/offline middleman would also help the process. That way you could confirm the generated key securely outside the external survailance/tampering
 Part 4
-	1. The first packet contains the encryption key that GPG generated, the second is the encrypted text. 
-	2. RSA is slower and unable to encrypt larger files(ie those that contain gigabytes of data). It therofore only uses RSA for a small portion of the key
+	1. The first packet contains the encryption key that was generated, the second is the encrypted text. 
+	2. RSA is slower and unable to encrypt larger files(ie those that contain gigabytes of data/are bigger than the key itself). It therofore only uses RSA for the session key
 	3. Hybrid cryptography(in this case public key encyrption and computer encryption)
 Part 4.3
-	My personal Key
-	1. BC722950391E5F4C
-	2. BC722950391E5F4C
-	The encryption key
-	3. A4D374B63691153E
-	4. A4D374B63691153E
-	
-	2) Signing provides authenticity to whatever is sent because it holds your personal key, and is therfore uniquely yours and nonrepudible. Encryption largely just provides confidentiality, but anyone with your key can encrypt it.
+	1. You sign with your private key
+	2. You verify with your public key
+	3. It is encrypted with the recipients public key
+	4. And decrypted with the recipients private key 	
+	2) Signing provides authenticity to whatever is sent because it holds your personal key, and is therfore uniquely yours and nonrepudible. Encryption largely just provides confidentiality, but anyone with your public key can encrypt it.
 
 Part 5
-	1. Unlike GPG, Ed25519 utilizes a harder mathmatical process than what RSA uses(eliptical curve vs prime factorization). This means it's not necessarily weaker despite the shorter length.
+	1. Ed25519 uses a harder mathmatical process than what RSA uses(eliptical curve vs prime factorization). This added difficulty to crack means it's not necessarily weaker despite the shorter length.
 
 Part 7
 	1. The program doesn't require any password length, and the salt is written in the beginning meaning the encryption is only as strong as the password(if they have the file they only need to iterate through a list of common passwords). There is also no block on this, as they are allowed infinite offline guesses. This kinda follows the same flaw as the Ceaser Cipher, since, while it may seem like they have a lot of potential passwords to guess, the key space is a much smaller set(the password)
